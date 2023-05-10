@@ -1,3 +1,7 @@
+import 'package:expense_tracker_fiap/pages/categorias_page.dart';
+import 'package:expense_tracker_fiap/pages/contas_page.dart';
+import 'package:expense_tracker_fiap/pages/dashboard_page.dart';
+import 'package:expense_tracker_fiap/pages/transacoes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -9,6 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int page = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +24,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getBody() {
-    return Container();
+    return IndexedStack(
+      index: page,
+      children: [
+        DashBoardPage(),
+        TransacoesPage(),
+        ContasPage(),
+        CategoriasPage()
+      ],
+    );
   }
 
   Widget getBottomNavigationBar() {
     return BottomNavigationBar(
+      currentIndex: page,
+      onTap: (index) {
+        setState(() {
+          page = index;
+        });
+      },
       items: [
         BottomNavigationBarItem(
             icon: Icon(Ionicons.bar_chart_outline), label: 'Dashboard'),
